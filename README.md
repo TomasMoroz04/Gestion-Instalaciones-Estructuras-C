@@ -1,8 +1,20 @@
 # 🛠️ Sistema de Gestión de Instalaciones y Órdenes de Trabajo en C
 
-Trabajo Práctico Integrador desarrollado en **lenguaje C** para el área de **Algoritmos y Estructuras de Datos** (Ingeniería en Informática).
+Trabajo Práctico Integrador desarrollado en **lenguaje C** para el área de **Algoritmos y Estructuras de Datos** (2.° año de Ingeniería en Informática, UGD).
 
 El sistema administra el ciclo completo de una empresa de instalaciones de seguridad electrónica y perimetral: catálogo de servicios, cálculo dinámico de presupuestos (mano de obra e insumos), asignación de órdenes de trabajo a técnicos y desglose de tareas operativas, sincronizando el estado en memoria dinámica con archivos `.csv`.
+
+---
+
+## 👥 Contexto del Proyecto y Créditos
+
+Este trabajo refleja el **esfuerzo colaborativo de 4 estudiantes** desarrollado durante nuestro segundo año en la carrera. La versión aquí publicada captura el código fuente del proyecto final entregado y defendido para la aprobación de la materia, demostrando las bases lógicas, el manejo de memoria manual y el dominio de estructuras de datos complejas.
+
+**Equipo de Desarrolladores:**
+* G. Casale
+* E. Centurion
+* M. Landro
+* **Tomás Moroz** *(Curador de este repositorio)*
 
 ---
 
