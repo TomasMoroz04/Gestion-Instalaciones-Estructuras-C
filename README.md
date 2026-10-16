@@ -1,66 +1,117 @@
-# 🛠️ Sistema de Gestión de Instalaciones y Órdenes de Trabajo en C
+<h1 align="center">🛠️ Gestión de Instalaciones y Órdenes de Trabajo</h1>
+<h3 align="center">Sistema de gestión desarrollado en C</h3>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Lenguaje-C-A8B9CC?style=for-the-badge&logo=c&logoColor=white" alt="Lenguaje C">
+  <img src="https://img.shields.io/badge/Compilador-GCC-5C6E8C?style=for-the-badge&logo=gnu&logoColor=white" alt="GCC">
+  <img src="https://img.shields.io/badge/Estructuras-Listas%20%7C%20Pilas%20%7C%20Colas-0A7EA4?style=for-the-badge" alt="Estructuras de datos">
+  <img src="https://img.shields.io/badge/Persistencia-CSV-239120?style=for-the-badge" alt="Archivos CSV">
+</p>
 
 Trabajo Práctico Integrador desarrollado en **lenguaje C** para el área de **Algoritmos y Estructuras de Datos** (2.° año de Ingeniería en Informática, UGD).
 
-El sistema administra el ciclo completo de una empresa de instalaciones de seguridad electrónica y perimetral: catálogo de servicios, cálculo dinámico de presupuestos (mano de obra e insumos), asignación de órdenes de trabajo a técnicos y desglose de tareas operativas, sincronizando el estado en memoria dinámica con archivos `.csv`.
+El sistema administra el ciclo completo de una empresa de instalaciones de seguridad electrónica y perimetral: catálogo de servicios, presupuestos dinámicos de mano de obra e insumos, asignación de órdenes de trabajo a técnicos y desglose de tareas operativas. La información se mantiene en estructuras dinámicas en memoria y se sincroniza con archivos `.csv`.
 
 ---
 
-## 👥 Contexto del Proyecto y Créditos
+## 📑 Índice
 
-Este trabajo refleja el **esfuerzo colaborativo de 4 estudiantes** desarrollado durante nuestro segundo año en la carrera. La versión aquí publicada captura el código fuente del proyecto final entregado y defendido para la aprobación de la materia, demostrando las bases lógicas, el manejo de memoria manual y el dominio de estructuras de datos complejas.
-
-**Equipo de Desarrolladores:**
-* G. Casale
-* E. Centurion
-* M. Landro
-* **Tomás Moroz** *(Curador de este repositorio)*
+- [Contexto y créditos](#-contexto-del-proyecto-y-créditos)
+- [Estructuras de datos](#-estructuras-de-datos-implementadas)
+- [Funcionalidades](#-funcionalidades-principales)
+- [Estructura del proyecto](#-estructura-del-proyecto)
+- [Compilación y ejecución](#-cómo-compilar-y-ejecutar)
 
 ---
 
-## 🧠 Estructuras de Datos Implementadas
+## 👥 Contexto del proyecto y créditos
 
-El proyecto implementa desde cero cinco estructuras dinámicas en memoria RAM (`malloc` / `free`) interconectadas entre sí:
+Este trabajo refleja el **esfuerzo colaborativo de cuatro estudiantes**, desarrollado durante nuestro segundo año de carrera. La versión publicada contiene el código fuente del proyecto final entregado y defendido para la aprobación de la materia, demostrando el manejo manual de memoria y el dominio de estructuras de datos complejas.
 
-| Estructura | Nombre en Código | Rol en el Sistema |
-| :--- | :--- | :--- |
-| **Lista Simplemente Enlazada (LES)** | `LES_Opciones`, `LES_Clientes`, `LES_Tecnicos` | Almacena el catálogo de servicios base, la cartera de clientes y el padrón de técnicos mediante inserción al final. |
-| **Lista Doblemente Enlazada (LED)** | `LED_Tareas` | Gestiona la secuencia de subtareas de cada servicio (`ant` y `sgte`), manteniendo el orden lógico de ejecución mediante inserción ordenada (`BuscarAnterior`). |
-| **Árbol Binario de Búsqueda (ABB)** | `ABB_Materiales` | Indexa los insumos y materiales de instalación ordenados jerárquicamente por código (`izq` menores, `der` mayores) para optimizar su recorrido y costeo. |
-| **Cola (FIFO)** | `Cola_Trabajos` | Administra las órdenes de instalación mediante punteros `entrada` y `salida`, diferenciando trabajos finalizados de pendientes. |
-| **Pila (LIFO)** | `Pila_Tareas_Pendientes` | Registra mediante manejo de `tope` las tareas operativas pendientes asignadas a cada técnico tras el alta de una orden. |
+**Equipo de desarrolladores:**
 
----
-
-## ⚙️ Funcionalidades Principales
-
-1. **Presupuestación Dinámica Integrada (LES + ABB + LED):**
-   * Recorre el catálogo de opciones (`LES_Opciones`), calcula de forma recursiva el costo total de insumos en el árbol binario (`calcular_monto_materiales` sobre `ABB_Materiales`) y suma los tiempos estimados de ejecución en la lista doble (`calcular_duracion` sobre `LED_Tareas`) para informar el costo final y la duración en horas de cada servicio.
-2. **Alta de Servicios Configurables:**
-   * Permite incorporar nuevas opciones comerciales junto con el desglose de sus subtareas en la lista doblemente enlazada y sus materiales asociados en el árbol binario.
-3. **Alta Transaccional de Órdenes de Trabajo:**
-   * Valida la integridad referencial verificando la existencia del cliente (`LES_Clientes`) y del técnico (`LES_Tecnicos`).
-   * Encola el nuevo trabajo en `Cola_Trabajos` y dispara automáticamente en cascada el apilado de todas las subtareas correspondientes a ese servicio en `Pila_Tareas_Pendientes`.
-4. **Consulta de Trabajos Pendientes por Técnico (Filtrado No Destructivo):**
-   * Desencola órdenes de `Cola_Trabajos` respetando la disciplina FIFO, filtra aquellas asignadas al técnico consultado que aún no poseen fecha de finalización (`0/0/0`) y utiliza una cola auxiliar (`entrada2`, `salida2`) para reconstruir la estructura original sin pérdida de información.
-5. **Persistencia Automática en CSV:**
-   * Carga inicial mediante parseo con `fgets` y `sscanf` desde 7 archivos `.csv` y volcado automático de todas las estructuras actualizadas (incluyendo recorrido preorden recursivo para el árbol y vaciado controlado de pilas y colas) al finalizar la sesión.
+- G. Casale
+- E. Centurion
+- M. Landro
+- **Tomás Moroz** — curador de este repositorio
 
 ---
 
-## 📂 Estructura del Proyecto
+## 🧠 Estructuras de datos implementadas
 
-* `ESTRUCTURAS.h` — Definición de `structs` y nodos de las estructuras de datos.
-* `Funciones.h` — Primitivas de listas, pilas, colas y árboles, lógica de negocio y manejo de archivos CSV.
-* `Prueba.c` — Programa principal, validación de entradas por consola y ciclo de menú interactivo.
-* `*.csv` — Archivos de persistencia (`Opciones.csv`, `Tareas.csv`, `Materiales.csv`, `Tecnicos.csv`, `Clientes.csv`, `Trabajos.csv`, `TareasPendientes.csv`).
+El proyecto implementa desde cero cinco estructuras dinámicas en RAM mediante `malloc` y `free`, interconectadas para resolver las operaciones del sistema.
+
+| Estructura | Nombre en código | Función dentro del sistema |
+|---|---|---|
+| **Lista simplemente enlazada (LES)** | `LES_Opciones`, `LES_Clientes`, `LES_Tecnicos` | Almacena el catálogo de servicios, la cartera de clientes y el padrón de técnicos, con inserción al final. |
+| **Lista doblemente enlazada (LED)** | `LED_Tareas` | Gestiona las subtareas de cada servicio mediante los enlaces `ant` y `sgte`, manteniendo el orden mediante `BuscarAnterior`. |
+| **Árbol binario de búsqueda (ABB)** | `ABB_Materiales` | Indexa materiales por código, ubicando los menores a la izquierda (`izq`) y los mayores a la derecha (`der`). |
+| **Cola FIFO** | `Cola_Trabajos` | Administra las órdenes de instalación mediante los punteros `entrada` y `salida`, diferenciando trabajos pendientes y finalizados. |
+| **Pila LIFO** | `Pila_Tareas_Pendientes` | Registra las tareas pendientes asignadas a cada técnico mediante el puntero `tope`. |
+
+---
+
+## ⚙️ Funcionalidades principales
+
+### 1. 💰 Presupuestación dinámica integrada
+
+Combina tres estructuras de datos para calcular presupuestos:
+
+- Recorre el catálogo de servicios en `LES_Opciones`.
+- Calcula recursivamente el costo de los insumos del árbol `ABB_Materiales` mediante `calcular_monto_materiales`.
+- Suma los tiempos de ejecución de `LED_Tareas` mediante `calcular_duracion`.
+- Informa el costo final y la duración estimada en horas de cada servicio.
+
+### 2. 🧩 Alta de servicios configurables
+
+Permite incorporar opciones comerciales y asociarles subtareas en la lista doblemente enlazada y materiales en el árbol binario.
+
+### 3. 🧾 Alta transaccional de órdenes de trabajo
+
+- Verifica la existencia del cliente en `LES_Clientes` y del técnico en `LES_Tecnicos`.
+- Encola el nuevo trabajo en `Cola_Trabajos`.
+- Apila las subtareas correspondientes al servicio en `Pila_Tareas_Pendientes`.
+
+### 4. 🔎 Consulta de trabajos pendientes por técnico
+
+Desencola órdenes respetando FIFO, filtra las asignadas al técnico consultado que todavía no tienen fecha de finalización (`0/0/0`) y utiliza una cola auxiliar (`entrada2`, `salida2`) para reconstruir la estructura original sin perder información.
+
+### 5. 💾 Persistencia automática en CSV
+
+- Carga inicial de siete archivos `.csv` mediante `fgets` y `sscanf`.
+- Guarda las estructuras actualizadas al finalizar la sesión.
+- Incluye recorrido preorden recursivo para el árbol y vaciado controlado de pilas y colas.
+
+---
+
+## 📂 Estructura del proyecto
+
+| Archivo | Descripción |
+|---|---|
+| `ESTRUCTURAS.h` | Definición de `structs` y nodos de las estructuras de datos. |
+| `Funciones.h` | Primitivas de listas, pilas, colas y árboles; lógica de negocio y manejo de CSV. |
+| `Prueba.c` | Programa principal, validación de entradas por consola y menú interactivo. |
+| `Opciones.csv` | Catálogo de opciones o servicios. |
+| `Tareas.csv` | Tareas vinculadas a los servicios. |
+| `Materiales.csv` | Materiales e insumos de instalación. |
+| `Tecnicos.csv` | Padrón de técnicos. |
+| `Clientes.csv` | Padrón de clientes. |
+| `Trabajos.csv` | Órdenes de trabajo. |
+| `TareasPendientes.csv` | Tareas pendientes por técnico. |
 
 ---
 
 ## 🚀 Cómo compilar y ejecutar
 
-Asegurate de tener los archivos `.csv` en el mismo directorio que el código fuente y ejecutá:
+Asegurate de tener los archivos `.csv` en el mismo directorio de trabajo que el ejecutable y el código fuente.
 
 ```bash
 gcc Prueba.c -o gestion_instalaciones
 ./gestion_instalaciones
+```
+
+> **Importante:** la aplicación necesita los archivos CSV para cargar los datos existentes y guardar los cambios. Conservá sus nombres y ubicaciones esperados por el programa.
+
+---
+
+<p align="center"><b>Algoritmos y Estructuras de Datos · C · Memoria dinámica · Persistencia CSV</b></p>
