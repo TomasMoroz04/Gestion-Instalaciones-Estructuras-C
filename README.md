@@ -90,7 +90,7 @@ Desencola órdenes respetando FIFO, filtra las asignadas al técnico consultado 
 |---|---|
 | `ESTRUCTURAS.h` | Definición de `structs` y nodos de las estructuras de datos. |
 | `Funciones.h` | Primitivas de listas, pilas, colas y árboles; lógica de negocio y manejo de CSV. |
-| `Prueba.c` | Programa principal, validación de entradas por consola y menú interactivo. |
+| `Gestion-Instalaciones-Estructuras.c` | Programa principal, validación de entradas por consola y menú interactivo. |
 | `Opciones.csv` | Catálogo de opciones o servicios. |
 | `Tareas.csv` | Tareas vinculadas a los servicios. |
 | `Materiales.csv` | Materiales e insumos de instalación. |
@@ -106,7 +106,7 @@ Desencola órdenes respetando FIFO, filtra las asignadas al técnico consultado 
 Asegurate de tener los archivos `.csv` en el mismo directorio de trabajo que el ejecutable y el código fuente.
 
 ```bash
-gcc Prueba.c -o gestion_instalaciones
+gcc Gestion-Instalaciones-Estructuras.c -o gestion_instalaciones
 ./gestion_instalaciones
 ```
 
